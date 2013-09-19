@@ -1,0 +1,53 @@
+<template name="articles">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-9">
+        {{> articles_toolbar}}
+
+        {{> articles_table}}
+
+        {{> articles_load_more}}
+      </div>
+    </div>
+  </div>
+</template>
+
+<template name="articles_toolbar">
+  <div class="btn-group sort-by-select btn-group-sm">
+    <button type="button" class="btn btn-default" data-sort-by="created_at">created at</button>
+    <button type="button" class="btn btn-default" data-sort-by="priority">priority</button>
+  </div>
+</template>
+
+<template name="articles_table">
+  <table class="table articles_table">
+    <tbody>
+    {{#each articles}}
+      {{> articles_table_item}}
+    {{/each}}
+    </tbody>
+  </table>
+</template>
+
+<template name="articles_table_item">
+  <tr data-article-id="{{_id}}">
+    <td>
+      <a href="{{url}}" target="_blank">{{title}}</a>
+      (priority: {{priority}}, created_at: {{formatDateTime created_at}})
+    </td>
+  </tr>
+</template>
+
+<template name="articles_load_more">
+  {{#if articlesReady}}
+    {{#unless allArticlesLoaded}}
+    <div class="row">
+      <div class="col-md-6 col-md-offset-3">
+        <a class="btn btn-default btn-block btn-lg load-more" href="#">Load more</a>
+      </div>
+    </div>
+    {{/unless}}
+  {{else}}
+    <div style="text-align: center;"><i class="icon-spinner icon-spin icon-2x"></i></div>
+  {{/if}}
+</template>
